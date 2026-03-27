@@ -1,0 +1,10 @@
+#include? "SigningOverrides.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = com.example.iPhoneMediaImporter
+GENERATE_INFOPLIST_FILE = NO
+INFOPLIST_FILE = Config/Info.plist
+CODE_SIGN_ENTITLEMENTS = Config/AppSandbox.entitlements
+SWIFT_VERSION = 6.0
+MACOSX_DEPLOYMENT_TARGET = 14.0
+ENABLE_HARDENED_RUNTIME = YES
+OTHER_CODE_SIGN_FLAGS = --timestamp

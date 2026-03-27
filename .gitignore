@@ -1,0 +1,20 @@
+.DS_Store
+
+# Swift Package Manager
+.build/
+
+# Xcode / DerivedData
+DerivedData/
+.derivedData*/
+.swift-module-cache/
+
+# User-specific Xcode files
+xcuserdata/
+*.xcuserstate
+
+# Build artifacts and installers
+build/
+
+# macOS temp files
+*.swp
+*.tmp

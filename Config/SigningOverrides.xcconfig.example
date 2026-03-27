@@ -1,0 +1,7 @@
+APP_DISPLAY_NAME = iPhone Media Importer
+PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.iPhoneMediaImporter
+DEVELOPMENT_TEAM = YOURTEAMID
+
+// Opsiyonel: Xcode otomatik secsin istemiyorsaniz acin.
+// CODE_SIGN_IDENTITY = Developer ID Application
+

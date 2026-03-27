@@ -1,0 +1,605 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		200000000000000000000001 /* iPhoneMediaImporterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000001 /* iPhoneMediaImporterApp.swift */; };
+		200000000000000000000002 /* AppMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000002 /* AppMode.swift */; };
+		200000000000000000000003 /* AppScreenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000003 /* AppScreenState.swift */; };
+		200000000000000000000004 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000004 /* AppSettings.swift */; };
+		200000000000000000000005 /* AssetSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000005 /* AssetSignature.swift */; };
+		200000000000000000000006 /* DeviceConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000006 /* DeviceConnectionState.swift */; };
+		200000000000000000000007 /* HistoryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000007 /* HistoryFilter.swift */; };
+		200000000000000000000008 /* ImportPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000008 /* ImportPlan.swift */; };
+		200000000000000000000009 /* MediaAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000009 /* MediaAsset.swift */; };
+		20000000000000000000000A /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10000000000000000000000A /* MediaType.swift */; };
+		20000000000000000000000B /* MockMediaAssetFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10000000000000000000000B /* MockMediaAssetFactory.swift */; };
+		20000000000000000000000C /* PlannedImportSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10000000000000000000000C /* PlannedImportSummary.swift */; };
+		20000000000000000000000D /* ScanSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10000000000000000000000D /* ScanSummary.swift */; };
+		20000000000000000000000E /* TransferErrorRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10000000000000000000000E /* TransferErrorRecord.swift */; };
+		20000000000000000000000F /* TransferHistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10000000000000000000000F /* TransferHistoryItem.swift */; };
+		200000000000000000000010 /* TransferProgressSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000010 /* TransferProgressSnapshot.swift */; };
+		200000000000000000000011 /* TransferReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000011 /* TransferReport.swift */; };
+		200000000000000000000012 /* TransferSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000012 /* TransferSummary.swift */; };
+		200000000000000000000013 /* AppSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000013 /* AppSettingsStore.swift */; };
+		200000000000000000000014 /* BookmarkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000014 /* BookmarkStore.swift */; };
+		200000000000000000000015 /* DeviceBrowserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000015 /* DeviceBrowserService.swift */; };
+		200000000000000000000016 /* DuplicateDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000016 /* DuplicateDetector.swift */; };
+		200000000000000000000017 /* ErrorLogWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000017 /* ErrorLogWriter.swift */; };
+		200000000000000000000018 /* FolderSelectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000018 /* FolderSelectionService.swift */; };
+		200000000000000000000019 /* HistoryExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000019 /* HistoryExportService.swift */; };
+		20000000000000000000001A /* ImportManifestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10000000000000000000001A /* ImportManifestStore.swift */; };
+		20000000000000000000001B /* ImportPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10000000000000000000001B /* ImportPlanner.swift */; };
+		20000000000000000000001C /* LoggerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10000000000000000000001C /* LoggerService.swift */; };
+		20000000000000000000001D /* MediaDateResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10000000000000000000001D /* MediaDateResolver.swift */; };
+		20000000000000000000001E /* MediaScannerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10000000000000000000001E /* MediaScannerService.swift */; };
+		20000000000000000000001F /* MediaTypeResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10000000000000000000001F /* MediaTypeResolver.swift */; };
+		200000000000000000000020 /* MonthFolderFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000020 /* MonthFolderFormatter.swift */; };
+		200000000000000000000021 /* TransferCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000021 /* TransferCoordinator.swift */; };
+		200000000000000000000022 /* TransferHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000022 /* TransferHistoryService.swift */; };
+		200000000000000000000023 /* TransferReportWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000023 /* TransferReportWriter.swift */; };
+		200000000000000000000024 /* FormattingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000024 /* FormattingHelpers.swift */; };
+		200000000000000000000025 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000025 /* AppViewModel.swift */; };
+		200000000000000000000026 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000026 /* ContentView.swift */; };
+		200000000000000000000027 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000105 /* AppIcon.icns */; };
+		400000000000000000000001 /* AssetSignatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300000000000000000000001 /* AssetSignatureTests.swift */; };
+		400000000000000000000002 /* ImportManifestStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300000000000000000000002 /* ImportManifestStoreTests.swift */; };
+		400000000000000000000003 /* ImportPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300000000000000000000003 /* ImportPlannerTests.swift */; };
+		400000000000000000000004 /* MonthFolderFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300000000000000000000004 /* MonthFolderFormatterTests.swift */; };
+		400000000000000000000005 /* AppSettingsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300000000000000000000005 /* AppSettingsStoreTests.swift */; };
+		400000000000000000000006 /* HistoryExportServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300000000000000000000006 /* HistoryExportServiceTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		810000000000000000000003 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 900000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 800000000000000000000001;
+			remoteInfo = iPhoneMediaImporterApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		100000000000000000000001 /* iPhoneMediaImporterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneMediaImporterApp.swift; sourceTree = "<group>"; };
+		100000000000000000000002 /* AppMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMode.swift; sourceTree = "<group>"; };
+		100000000000000000000003 /* AppScreenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScreenState.swift; sourceTree = "<group>"; };
+		100000000000000000000004 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		100000000000000000000005 /* AssetSignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSignature.swift; sourceTree = "<group>"; };
+		100000000000000000000006 /* DeviceConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectionState.swift; sourceTree = "<group>"; };
+		100000000000000000000007 /* HistoryFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryFilter.swift; sourceTree = "<group>"; };
+		100000000000000000000008 /* ImportPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPlan.swift; sourceTree = "<group>"; };
+		100000000000000000000009 /* MediaAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaAsset.swift; sourceTree = "<group>"; };
+		10000000000000000000000A /* MediaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
+		10000000000000000000000B /* MockMediaAssetFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMediaAssetFactory.swift; sourceTree = "<group>"; };
+		10000000000000000000000C /* PlannedImportSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannedImportSummary.swift; sourceTree = "<group>"; };
+		10000000000000000000000D /* ScanSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanSummary.swift; sourceTree = "<group>"; };
+		10000000000000000000000E /* TransferErrorRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferErrorRecord.swift; sourceTree = "<group>"; };
+		10000000000000000000000F /* TransferHistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryItem.swift; sourceTree = "<group>"; };
+		100000000000000000000010 /* TransferProgressSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferProgressSnapshot.swift; sourceTree = "<group>"; };
+		100000000000000000000011 /* TransferReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferReport.swift; sourceTree = "<group>"; };
+		100000000000000000000012 /* TransferSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferSummary.swift; sourceTree = "<group>"; };
+		100000000000000000000013 /* AppSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsStore.swift; sourceTree = "<group>"; };
+		100000000000000000000014 /* BookmarkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkStore.swift; sourceTree = "<group>"; };
+		100000000000000000000015 /* DeviceBrowserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceBrowserService.swift; sourceTree = "<group>"; };
+		100000000000000000000016 /* DuplicateDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateDetector.swift; sourceTree = "<group>"; };
+		100000000000000000000017 /* ErrorLogWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLogWriter.swift; sourceTree = "<group>"; };
+		100000000000000000000018 /* FolderSelectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelectionService.swift; sourceTree = "<group>"; };
+		100000000000000000000019 /* HistoryExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryExportService.swift; sourceTree = "<group>"; };
+		10000000000000000000001A /* ImportManifestStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportManifestStore.swift; sourceTree = "<group>"; };
+		10000000000000000000001B /* ImportPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPlanner.swift; sourceTree = "<group>"; };
+		10000000000000000000001C /* LoggerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerService.swift; sourceTree = "<group>"; };
+		10000000000000000000001D /* MediaDateResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDateResolver.swift; sourceTree = "<group>"; };
+		10000000000000000000001E /* MediaScannerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaScannerService.swift; sourceTree = "<group>"; };
+		10000000000000000000001F /* MediaTypeResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTypeResolver.swift; sourceTree = "<group>"; };
+		100000000000000000000020 /* MonthFolderFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthFolderFormatter.swift; sourceTree = "<group>"; };
+		100000000000000000000021 /* TransferCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferCoordinator.swift; sourceTree = "<group>"; };
+		100000000000000000000022 /* TransferHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferHistoryService.swift; sourceTree = "<group>"; };
+		100000000000000000000023 /* TransferReportWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferReportWriter.swift; sourceTree = "<group>"; };
+		100000000000000000000024 /* FormattingHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattingHelpers.swift; sourceTree = "<group>"; };
+		100000000000000000000025 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
+		100000000000000000000026 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		100000000000000000000101 /* AppSandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppSandbox.entitlements; sourceTree = "<group>"; };
+		100000000000000000000102 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		100000000000000000000103 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		100000000000000000000104 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		100000000000000000000105 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
+		300000000000000000000001 /* AssetSignatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSignatureTests.swift; sourceTree = "<group>"; };
+		300000000000000000000002 /* ImportManifestStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportManifestStoreTests.swift; sourceTree = "<group>"; };
+		300000000000000000000003 /* ImportPlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportPlannerTests.swift; sourceTree = "<group>"; };
+		300000000000000000000004 /* MonthFolderFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthFolderFormatterTests.swift; sourceTree = "<group>"; };
+		300000000000000000000005 /* AppSettingsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsStoreTests.swift; sourceTree = "<group>"; };
+		300000000000000000000006 /* HistoryExportServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryExportServiceTests.swift; sourceTree = "<group>"; };
+		600000000000000000000001 /* iPhoneMediaImporter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPhoneMediaImporter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		600000000000000000000002 /* iPhoneMediaImporterAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iPhoneMediaImporterAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		700000000000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		700000000000000000000005 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		500000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				500000000000000000000002 /* Sources */,
+				500000000000000000000009 /* Tests */,
+				50000000000000000000000A /* Config */,
+				50000000000000000000000B /* Products */,
+				100000000000000000000103 /* Info.plist */,
+			);
+			sourceTree = "<group>";
+		};
+		500000000000000000000002 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				500000000000000000000003 /* App */,
+				500000000000000000000004 /* Models */,
+				500000000000000000000005 /* Services */,
+				500000000000000000000006 /* Utilities */,
+				500000000000000000000007 /* ViewModels */,
+				500000000000000000000008 /* Views */,
+				50000000000000000000000C /* Resources */,
+			);
+			path = Sources/iPhoneMediaImporterApp;
+			sourceTree = SOURCE_ROOT;
+		};
+		500000000000000000000003 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000001 /* iPhoneMediaImporterApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		500000000000000000000004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000002,
+				100000000000000000000003,
+				100000000000000000000004,
+				100000000000000000000005,
+				100000000000000000000006,
+				100000000000000000000007,
+				100000000000000000000008,
+				100000000000000000000009,
+				10000000000000000000000A,
+				10000000000000000000000B,
+				10000000000000000000000C,
+				10000000000000000000000D,
+				10000000000000000000000E,
+				10000000000000000000000F,
+				100000000000000000000010,
+				100000000000000000000011,
+				100000000000000000000012,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		500000000000000000000005 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000013,
+				100000000000000000000014,
+				100000000000000000000015,
+				100000000000000000000016,
+				100000000000000000000017,
+				100000000000000000000018,
+				100000000000000000000019,
+				10000000000000000000001A,
+				10000000000000000000001B,
+				10000000000000000000001C,
+				10000000000000000000001D,
+				10000000000000000000001E,
+				10000000000000000000001F,
+				100000000000000000000020,
+				100000000000000000000021,
+				100000000000000000000022,
+				100000000000000000000023,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		500000000000000000000006 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000024,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		500000000000000000000007 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000025,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		500000000000000000000008 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000026,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		500000000000000000000009 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				300000000000000000000005,
+				300000000000000000000001,
+				300000000000000000000006,
+				300000000000000000000002,
+				300000000000000000000003,
+				300000000000000000000004,
+			);
+			path = Tests/iPhoneMediaImporterAppTests;
+			sourceTree = SOURCE_ROOT;
+		};
+		50000000000000000000000A /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000101,
+				100000000000000000000102,
+				100000000000000000000104,
+			);
+			path = Config;
+			sourceTree = SOURCE_ROOT;
+		};
+		50000000000000000000000B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				600000000000000000000001,
+				600000000000000000000002,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		50000000000000000000000C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000105 /* AppIcon.icns */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		800000000000000000000001 /* iPhoneMediaImporterApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000000000000000000001 /* Build configuration list for PBXNativeTarget "iPhoneMediaImporterApp" */;
+			buildPhases = (
+				700000000000000000000001 /* Sources */,
+				700000000000000000000002 /* Frameworks */,
+				700000000000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iPhoneMediaImporterApp;
+			productName = iPhoneMediaImporter;
+			productReference = 600000000000000000000001 /* iPhoneMediaImporter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		800000000000000000000002 /* iPhoneMediaImporterAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000000000000000000002 /* Build configuration list for PBXNativeTarget "iPhoneMediaImporterAppTests" */;
+			buildPhases = (
+				700000000000000000000004 /* Sources */,
+				700000000000000000000005 /* Frameworks */,
+				700000000000000000000006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				810000000000000000000004 /* PBXTargetDependency */,
+			);
+			name = iPhoneMediaImporterAppTests;
+			productName = iPhoneMediaImporterAppTests;
+			productReference = 600000000000000000000002 /* iPhoneMediaImporterAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		900000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					800000000000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					800000000000000000000002 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 800000000000000000000001;
+					};
+				};
+			};
+			buildConfigurationList = A10000000000000000000003 /* Build configuration list for PBXProject "iPhoneMediaImporter" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = tr;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				tr,
+			);
+			mainGroup = 500000000000000000000001;
+			productRefGroup = 50000000000000000000000B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				800000000000000000000001 /* iPhoneMediaImporterApp */,
+				800000000000000000000002 /* iPhoneMediaImporterAppTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		700000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				200000000000000000000027 /* AppIcon.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		700000000000000000000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		700000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				200000000000000000000001,
+				200000000000000000000002,
+				200000000000000000000003,
+				200000000000000000000004,
+				200000000000000000000005,
+				200000000000000000000006,
+				200000000000000000000007,
+				200000000000000000000008,
+				200000000000000000000009,
+				20000000000000000000000A,
+				20000000000000000000000B,
+				20000000000000000000000C,
+				20000000000000000000000D,
+				20000000000000000000000E,
+				20000000000000000000000F,
+				200000000000000000000010,
+				200000000000000000000011,
+				200000000000000000000012,
+				200000000000000000000013,
+				200000000000000000000014,
+				200000000000000000000015,
+				200000000000000000000016,
+				200000000000000000000017,
+				200000000000000000000018,
+				200000000000000000000019,
+				20000000000000000000001A,
+				20000000000000000000001B,
+				20000000000000000000001C,
+				20000000000000000000001D,
+				20000000000000000000001E,
+				20000000000000000000001F,
+				200000000000000000000020,
+				200000000000000000000021,
+				200000000000000000000022,
+				200000000000000000000023,
+				200000000000000000000024,
+				200000000000000000000025,
+				200000000000000000000026,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		700000000000000000000004 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				400000000000000000000005,
+				400000000000000000000001,
+				400000000000000000000006,
+				400000000000000000000002,
+				400000000000000000000003,
+				400000000000000000000004,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		810000000000000000000004 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 800000000000000000000001 /* iPhoneMediaImporterApp */;
+			targetProxy = 810000000000000000000003 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A00000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				MARKETING_VERSION = 0.1.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		A00000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				MARKETING_VERSION = 0.1.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		A00000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 100000000000000000000102 /* Debug.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_TESTABILITY = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Config/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.iPhoneMediaImporter;
+				PRODUCT_MODULE_NAME = iPhoneMediaImporterApp;
+				PRODUCT_NAME = iPhoneMediaImporter;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		A00000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 100000000000000000000104 /* Release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/AppSandbox.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Config/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.iPhoneMediaImporter;
+				PRODUCT_MODULE_NAME = iPhoneMediaImporterApp;
+				PRODUCT_NAME = iPhoneMediaImporter;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		A00000000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_TESTABILITY = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.iPhoneMediaImporterTests;
+				PRODUCT_MODULE_NAME = iPhoneMediaImporterAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iPhoneMediaImporter.app/Contents/MacOS/iPhoneMediaImporter";
+			};
+			name = Debug;
+		};
+		A00000000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.iPhoneMediaImporterTests;
+				PRODUCT_MODULE_NAME = iPhoneMediaImporterAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iPhoneMediaImporter.app/Contents/MacOS/iPhoneMediaImporter";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A10000000000000000000001 /* Build configuration list for PBXNativeTarget "iPhoneMediaImporterApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000003 /* Debug */,
+				A00000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000000000000000000002 /* Build configuration list for PBXNativeTarget "iPhoneMediaImporterAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000005 /* Debug */,
+				A00000000000000000000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000000000000000000003 /* Build configuration list for PBXProject "iPhoneMediaImporter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000001 /* Debug */,
+				A00000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 900000000000000000000001 /* Project object */;
+}
