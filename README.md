@@ -1,3 +1,19 @@
+## Screenshots
+
+### Main Screen
+![Main Screen](Docs/Screenshots/main-screen.png)
+
+### Scan Results
+![Scan Results](Docs/Screenshots/scan-results.png)
+
+### Transfer Complete
+![Transfer Complete](Docs/Screenshots/transfer-complete.png)
+
+### Settings
+![Settings](Docs/Screenshots/settings.png)
+
+
+
 # iPhone Media Importer
 iPhone Media Importer is a lightweight macOS app that helps you transfer iPhone photos and videos to your Mac in a clean, organized, and reliable way.
 
