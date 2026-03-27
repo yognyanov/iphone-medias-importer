@@ -7,7 +7,7 @@
 ![Scan Results](Docs/Screenshots/scan-results.png)
 
 ### Transfer Complete
-![Transfer Complete](Docs/Screenshots/transfer-complete.png)
+![Transfer Complete](Docs/Screenshots/transfer.png)
 
 ### Settings
 ![Settings](Docs/Screenshots/settings.png)
