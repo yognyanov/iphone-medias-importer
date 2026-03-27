@@ -8,9 +8,9 @@ enum TransferCoordinatorError: LocalizedError, Equatable {
     var errorDescription: String? {
         switch self {
         case .targetFolderMissing:
-            return "Hedef klasor secilmedi."
+            return AppLanguage.text("Hedef klasör seçilmedi.", "No destination folder was selected.")
         case .cancelled:
-            return "Islem kullanici tarafindan iptal edildi."
+            return AppLanguage.text("İşlem kullanıcı tarafından iptal edildi.", "The transfer was cancelled by the user.")
         }
     }
 }
@@ -154,7 +154,19 @@ final class TransferCoordinator: @unchecked Sendable {
                     try await download(item: item)
                     copiedFiles += 1
                     copiedBytes += item.asset.fileSize
-                    manifest.importedAssets.append(AssetSignature(asset: item.asset))
+                    manifest.importedAssets.append(
+                        AssetSignature(
+                            sourceIdentifier: item.asset.sourceIdentifier,
+                            fileName: item.asset.fileName,
+                            fileSize: item.asset.fileSize,
+                            createdAt: item.asset.createdAt,
+                            fingerprint: item.asset.fingerprint,
+                            destinationRelativePath: item.destinationFileURL.path.replacingOccurrences(
+                                of: "\(targetFolder.path(percentEncoded: false))/",
+                                with: ""
+                            )
+                        )
+                    )
 
                     switch item.asset.mediaType {
                     case .photo:

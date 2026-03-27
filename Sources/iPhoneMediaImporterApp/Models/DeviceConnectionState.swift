@@ -9,11 +9,11 @@ enum DeviceConnectionState: Equatable {
     var title: String {
         switch self {
         case .searching:
-            return "Cihaz bekleniyor"
+            return AppLanguage.text("Cihaz bekleniyor", "Waiting for device")
         case .disconnected:
-            return "iPhone bağlı değil"
+            return AppLanguage.text("iPhone bağlı değil", "iPhone not connected")
         case let .connected(name):
-            return "\(name) bağlı"
+            return AppLanguage.isTurkish ? "\(name) bağlı" : "Connected: \(FormattingHelpers.localizedDeviceName(name))"
         case let .accessRestricted(message):
             return message
         }

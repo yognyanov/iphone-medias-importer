@@ -3,6 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: AppViewModel
     @State private var isSettingsPresented = false
+    private let supportURL = URL(string: "https://www.paypal.me/YOgnyanov")
 
     var body: some View {
         NavigationStack {
@@ -38,6 +39,8 @@ struct ContentView: View {
                             if let error = viewModel.lastErrorMessage {
                                 errorCard(message: error)
                             }
+
+                            supportFooter
                         }
                         .frame(maxWidth: 1120)
                         .padding(isNarrow ? 20 : 28)
@@ -45,13 +48,13 @@ struct ContentView: View {
                     }
                 }
             }
-            .navigationTitle("iPhone Medya Aktarıcı")
+            .navigationTitle(AppLanguage.text("iPhone Medya Aktarıcı", "iPhone Media Importer"))
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         isSettingsPresented = true
                     } label: {
-                        Label("Ayarlar", systemImage: "gearshape.fill")
+                        Label(AppLanguage.text("Ayarlar", "Settings"), systemImage: "gearshape.fill")
                     }
                 }
             }
@@ -93,23 +96,24 @@ struct ContentView: View {
             HStack(alignment: .center, spacing: 16) {
                 headerLogo
 
-                Text("iPhone'dan Mac'e kolay aktarım")
+                Text(AppLanguage.text("iPhone'dan Mac'e kolay aktarım", "Easy transfer from iPhone to Mac"))
                     .font(.system(size: 28, weight: .semibold))
             }
 
-            Text("iPhone'unuzdaki fotoğraf ve video dosyalarını Mac'inize aktarır.")
+            Text(AppLanguage.text("iPhone'unuzdaki fotoğraf ve video dosyalarını Mac'inize aktarır.", "Transfers photo and video files from your iPhone to your Mac."))
                 .foregroundStyle(.secondary)
 
             if viewModel.isDemoMode {
-                Label("Demo modu aktif. Gerçek cihaz yerine örnek medya listesi kullanılıyor.", systemImage: "bolt.horizontal.circle")
+                Label(AppLanguage.text("Demo modu aktif. Gerçek cihaz yerine örnek medya listesi kullanılıyor.", "Demo mode is active. Sample media is shown instead of a real device."), systemImage: "bolt.horizontal.circle")
                     .foregroundStyle(Color.orange)
             }
 
             DeviceStatusRow(
                 deviceStateTitle: viewModel.deviceStateTitle,
-                targetFolderPath: viewModel.targetFolderURL?.path(percentEncoded: false) ?? "Seçilmedi",
+                targetFolderPath: viewModel.targetFolderURL?.path(percentEncoded: false) ?? AppLanguage.text("Seçilmedi", "Not selected"),
                 isStacked: isNarrow
             )
+            .id("device-status-row-\(AppLanguage.localeIdentifier)")
 
             if let deviceHelpMessage = viewModel.deviceHelpMessage {
                 helperHintCard(message: deviceHelpMessage)
@@ -118,36 +122,36 @@ struct ContentView: View {
             Group {
                 if isNarrow {
                     VStack(alignment: .leading, spacing: 12) {
-                        Button("Hedef Klasör Seç") {
+                        Button(AppLanguage.text("Hedef Klasör Seç", "Choose Destination Folder")) {
                             viewModel.chooseTargetFolder()
                         }
                         .buttonStyle(.bordered)
 
-                        Button("Seçimi Temizle") {
+                        Button(AppLanguage.text("Seçimi Temizle", "Clear Selection")) {
                             viewModel.clearTargetFolderSelection()
                         }
                         .buttonStyle(.bordered)
                         .disabled(viewModel.targetFolderURL == nil)
 
-                        Button("Yeniden Dene") {
+                        Button(AppLanguage.text("Yeniden Dene", "Retry")) {
                             viewModel.retryDeviceConnection()
                         }
                         .buttonStyle(.bordered)
                     }
                 } else {
                     HStack(spacing: 12) {
-                        Button("Hedef Klasör Seç") {
+                        Button(AppLanguage.text("Hedef Klasör Seç", "Choose Destination Folder")) {
                             viewModel.chooseTargetFolder()
                         }
                         .buttonStyle(.bordered)
 
-                        Button("Seçimi Temizle") {
+                        Button(AppLanguage.text("Seçimi Temizle", "Clear Selection")) {
                             viewModel.clearTargetFolderSelection()
                         }
                         .buttonStyle(.bordered)
                         .disabled(viewModel.targetFolderURL == nil)
 
-                        Button("Yeniden Dene") {
+                        Button(AppLanguage.text("Yeniden Dene", "Retry")) {
                             viewModel.retryDeviceConnection()
                         }
                         .buttonStyle(.bordered)
@@ -179,7 +183,7 @@ struct ContentView: View {
         Button {
             viewModel.scanDevice()
         } label: {
-            Label("Tara", systemImage: "waveform.magnifyingglass")
+            Label(AppLanguage.text("Tara", "Scan"), systemImage: "waveform.magnifyingglass")
                 .frame(maxWidth: .infinity)
         }
         .buttonStyle(.borderedProminent)
@@ -192,7 +196,7 @@ struct ContentView: View {
         Button {
             viewModel.startCopy()
         } label: {
-            Label("Kopyalamayı Başlat", systemImage: "arrow.down.circle.fill")
+            Label(AppLanguage.text("Kopyalamayı Başlat", "Start Transfer"), systemImage: "arrow.down.circle.fill")
                 .frame(maxWidth: .infinity)
         }
         .buttonStyle(.borderedProminent)
@@ -229,20 +233,38 @@ struct ContentView: View {
         .accessibilityHidden(true)
     }
 
+    private var supportFooter: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "cup.and.saucer.fill")
+                .foregroundStyle(Color(red: 0.60, green: 0.37, blue: 0.18))
+
+            Text(AppLanguage.text("Uygulamayı beğendiyseniz bir kahve ısmarlayabilirsiniz.", "If you enjoyed the app, you can buy me a coffee."))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+
+            if let supportURL {
+                Link(AppLanguage.text("Destek Ol", "Support"), destination: supportURL)
+                    .font(.footnote.weight(.semibold))
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.top, 4)
+    }
+
     private func scanOverviewCard(isCompact: Bool) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Tarama Sonucu")
+            Text(AppLanguage.text("Tarama Sonucu", "Scan Results"))
                 .font(.title2.weight(.semibold))
 
             VStack(alignment: .leading, spacing: 12) {
-                Text("Aktarım Seçenekleri")
+                Text(AppLanguage.text("Aktarım Seçenekleri", "Transfer Options"))
                     .font(.headline)
 
                 if isCompact {
                     VStack(alignment: .leading, spacing: 12) {
                         mediaTypeSection
 
-                        Toggle("Yalnızca yeni dosyaları aktar", isOn: Binding(
+                        Toggle(AppLanguage.text("Yalnızca yeni dosyaları aktar", "Transfer only new files"), isOn: Binding(
                             get: { viewModel.onlyTransferNewFiles },
                             set: { viewModel.updateOnlyTransferNewFiles($0) }
                         ))
@@ -254,7 +276,7 @@ struct ContentView: View {
                         VStack(alignment: .leading, spacing: 12) {
                             mediaTypeSection
 
-                            Toggle("Yalnızca yeni dosyaları aktar", isOn: Binding(
+                            Toggle(AppLanguage.text("Yalnızca yeni dosyaları aktar", "Transfer only new files"), isOn: Binding(
                                 get: { viewModel.onlyTransferNewFiles },
                                 set: { viewModel.updateOnlyTransferNewFiles($0) }
                             ))
@@ -267,10 +289,10 @@ struct ContentView: View {
             }
 
             LazyVGrid(columns: metricColumns(isCompact: isCompact), alignment: .leading, spacing: 12) {
-                metricCard(title: "Fotoğraflar", value: "\(viewModel.scanSummary.totalPhotos)")
-                metricCard(title: "Videolar", value: "\(viewModel.scanSummary.totalVideos)")
-                metricCard(title: "Toplam Boyut", value: FormattingHelpers.formattedByteCount(viewModel.scanSummary.totalBytes))
-                metricCard(title: "Kaynak", value: viewModel.scanSummary.deviceLabel)
+                metricCard(title: AppLanguage.text("Fotoğraflar", "Photos"), value: "\(viewModel.scanSummary.totalPhotos)")
+                metricCard(title: AppLanguage.text("Videolar", "Videos"), value: "\(viewModel.scanSummary.totalVideos)")
+                metricCard(title: AppLanguage.text("Toplam Boyut", "Total Size"), value: FormattingHelpers.formattedByteCount(viewModel.scanSummary.totalBytes))
+                metricCard(title: AppLanguage.text("Kaynak", "Source"), value: FormattingHelpers.localizedDeviceName(viewModel.scanSummary.deviceLabel))
             }
         }
         .padding(22)
@@ -280,11 +302,11 @@ struct ContentView: View {
 
     private var mediaTypeSection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Medya Türü")
+            Text(AppLanguage.text("Medya Türü", "Media Type"))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
-            Picker("Medya Türü", selection: Binding(
+            Picker(AppLanguage.text("Medya Türü", "Media Type"), selection: Binding(
                 get: { viewModel.mediaTransferFilter },
                 set: { viewModel.updateMediaTransferFilter($0) }
             )) {
@@ -292,6 +314,7 @@ struct ContentView: View {
                     Text(filter.title).tag(filter)
                 }
             }
+            .id("media-transfer-filter-\(AppLanguage.localeIdentifier)")
             .pickerStyle(.segmented)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -299,13 +322,13 @@ struct ContentView: View {
 
     private var dateFilterSection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Tarih Aralığı")
+            Text(AppLanguage.text("Tarih Aralığı", "Date Range"))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
             if viewModel.importDateFilter.mode == .all {
                 VStack(alignment: .leading, spacing: 4) {
-                    Picker("Tarih Aralığı", selection: Binding(
+                    Picker(AppLanguage.text("Tarih Aralığı", "Date Range"), selection: Binding(
                         get: { viewModel.importDateFilter.mode },
                         set: { viewModel.updateImportDateFilterMode($0) }
                     )) {
@@ -313,6 +336,7 @@ struct ContentView: View {
                             Text(mode.title).tag(mode)
                         }
                     }
+                    .id("date-filter-mode-all-\(AppLanguage.localeIdentifier)")
                     .labelsHidden()
                     .pickerStyle(.menu)
                     .frame(minWidth: 120)
@@ -321,7 +345,7 @@ struct ContentView: View {
             } else {
                 VStack(alignment: .leading, spacing: 6) {
                     HStack(alignment: .center, spacing: 14) {
-                        Picker("Tarih Aralığı", selection: Binding(
+                        Picker(AppLanguage.text("Tarih Aralığı", "Date Range"), selection: Binding(
                             get: { viewModel.importDateFilter.mode },
                             set: { viewModel.updateImportDateFilterMode($0) }
                         )) {
@@ -329,12 +353,13 @@ struct ContentView: View {
                                 Text(mode.title).tag(mode)
                             }
                         }
+                        .id("date-filter-mode-\(AppLanguage.localeIdentifier)")
                         .labelsHidden()
                         .pickerStyle(.menu)
                         .frame(minWidth: 120)
 
                         if viewModel.importDateFilter.mode == .specificMonth {
-                            Picker("Ay", selection: Binding(
+                            Picker(AppLanguage.text("Ay", "Month"), selection: Binding(
                                 get: { viewModel.importDateFilter.month },
                                 set: { viewModel.updateImportDateFilterMonth($0) }
                             )) {
@@ -342,13 +367,14 @@ struct ContentView: View {
                                     Text(ImportDateFilter(mode: .specificMonth, year: viewModel.importDateFilter.year, month: month).monthTitle).tag(month)
                                 }
                             }
+                            .id("date-filter-month-\(AppLanguage.localeIdentifier)-\(viewModel.importDateFilter.year)")
                             .labelsHidden()
                             .pickerStyle(.menu)
                             .frame(minWidth: 120)
                         }
 
                         if viewModel.importDateFilter.mode == .specificYear || viewModel.importDateFilter.mode == .specificMonth {
-                            Picker("Yıl", selection: Binding(
+                            Picker(AppLanguage.text("Yıl", "Year"), selection: Binding(
                                 get: { viewModel.importDateFilter.year },
                                 set: { viewModel.updateImportDateFilterYear($0) }
                             )) {
@@ -356,6 +382,7 @@ struct ContentView: View {
                                     Text(String(year)).tag(year)
                                 }
                             }
+                            .id("date-filter-year-\(AppLanguage.localeIdentifier)-\(viewModel.availableAssetYears.map(String.init).joined(separator: "-"))")
                             .labelsHidden()
                             .pickerStyle(.menu)
                             .frame(minWidth: 100)
@@ -377,10 +404,10 @@ struct ContentView: View {
             settingsContent
                 .padding(24)
                 .frame(minWidth: 480, idealWidth: 560)
-                .navigationTitle("Ayarlar")
+                .navigationTitle(AppLanguage.text("Ayarlar", "Settings"))
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
-                        Button("Kapat") {
+                        Button(AppLanguage.text("Kapat", "Close")) {
                             isSettingsPresented = false
                         }
                     }
@@ -390,28 +417,49 @@ struct ContentView: View {
 
     private var settingsContent: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Toggle("Aktarım bitince hedef klasörü otomatik aç", isOn: Binding(
+            VStack(alignment: .leading, spacing: 8) {
+                Text(AppLanguage.text("Uygulama Dili", "App Language"))
+                    .font(.headline)
+
+                    Picker(
+                        AppLanguage.text("Uygulama Dili", "App Language"),
+                        selection: Binding(
+                            get: { viewModel.settings.languagePreference },
+                            set: { newValue in
+                            viewModel.updateSettings { $0.languagePreference = newValue }
+                        }
+                    )
+                ) {
+                        ForEach(AppLanguagePreference.allCases, id: \.self) { preference in
+                            Text(preference.title).tag(preference)
+                        }
+                    }
+                    .id("app-language-picker-\(AppLanguage.localeIdentifier)")
+                    .pickerStyle(.segmented)
+                }
+
+            Toggle(AppLanguage.text("Aktarım bitince hedef klasörü otomatik aç", "Open destination folder automatically after transfer"), isOn: Binding(
                 get: { viewModel.settings.autoOpenTargetFolderAfterTransfer },
                 set: { newValue in
                     viewModel.updateSettings { $0.autoOpenTargetFolderAfterTransfer = newValue }
                 }
             ))
 
-            Toggle("Aktarım bitince bildirim göster", isOn: Binding(
+            Toggle(AppLanguage.text("Aktarım bitince bildirim göster", "Show notification when transfer finishes"), isOn: Binding(
                 get: { viewModel.settings.showCompletionNotification },
                 set: { newValue in
                     viewModel.updateSettings { $0.showCompletionNotification = newValue }
                 }
             ))
 
-            Toggle("JSON aktarım raporu kaydet", isOn: Binding(
+            Toggle(AppLanguage.text("JSON aktarım raporu kaydet", "Save JSON transfer report"), isOn: Binding(
                 get: { viewModel.settings.saveTransferReports },
                 set: { newValue in
                     viewModel.updateSettings { $0.saveTransferReports = newValue }
                 }
             ))
 
-            Toggle("Hata logu kaydet", isOn: Binding(
+            Toggle(AppLanguage.text("Hata logu kaydet", "Save error log"), isOn: Binding(
                 get: { viewModel.settings.saveErrorLogs },
                 set: { newValue in
                     viewModel.updateSettings { $0.saveErrorLogs = newValue }
@@ -424,7 +472,7 @@ struct ContentView: View {
 
     private func transferCard(isCompact: Bool) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Kopyalama Durumu")
+            Text(AppLanguage.text("Kopyalama Durumu", "Transfer Status"))
                 .font(.title2.weight(.semibold))
 
             HStack {
@@ -437,28 +485,28 @@ struct ContentView: View {
                 .scaleEffect(y: 1.6)
 
             LazyVGrid(columns: metricColumns(isCompact: isCompact), alignment: .leading, spacing: 12) {
-                metricCard(title: "Anlık Dosya", value: viewModel.transferProgress.currentFileName)
-                metricCard(title: "Kopyalanan", value: "\(viewModel.transferProgress.copiedFiles)")
-                metricCard(title: "Fotoğraf", value: "\(viewModel.transferProgress.copiedPhotos)")
-                metricCard(title: "Video", value: "\(viewModel.transferProgress.copiedVideos)")
-                metricCard(title: "Kalan", value: "\(viewModel.transferProgress.remainingFiles)")
-                metricCard(title: "Kalan Boyut", value: FormattingHelpers.formattedByteCount(viewModel.transferProgress.remainingBytes))
-                metricCard(title: "Hız", value: viewModel.transferSpeedText)
-                metricCard(title: "Tahmini Süre", value: FormattingHelpers.formattedDuration(viewModel.transferProgress.estimatedRemainingTime))
+                metricCard(title: AppLanguage.text("Anlık Dosya", "Current File"), value: viewModel.transferProgress.currentFileName)
+                metricCard(title: AppLanguage.text("Kopyalanan", "Copied"), value: "\(viewModel.transferProgress.copiedFiles)")
+                metricCard(title: AppLanguage.text("Fotoğraf", "Photos"), value: "\(viewModel.transferProgress.copiedPhotos)")
+                metricCard(title: AppLanguage.text("Video", "Videos"), value: "\(viewModel.transferProgress.copiedVideos)")
+                metricCard(title: AppLanguage.text("Kalan", "Remaining"), value: "\(viewModel.transferProgress.remainingFiles)")
+                metricCard(title: AppLanguage.text("Kalan Boyut", "Remaining Size"), value: FormattingHelpers.formattedByteCount(viewModel.transferProgress.remainingBytes))
+                metricCard(title: AppLanguage.text("Hız", "Speed"), value: viewModel.transferSpeedText)
+                metricCard(title: AppLanguage.text("Tahmini Süre", "Estimated Time"), value: FormattingHelpers.formattedDuration(viewModel.transferProgress.estimatedRemainingTime))
             }
 
             HStack(spacing: 12) {
-                Button("Duraklat") {
+                Button(AppLanguage.text("Duraklat", "Pause")) {
                     viewModel.pauseTransfer()
                 }
                 .disabled(viewModel.isTransferPaused || viewModel.screenState != .copying)
 
-                Button("Devam Et") {
+                Button(AppLanguage.text("Devam Et", "Resume")) {
                     viewModel.resumeTransfer()
                 }
                 .disabled(!viewModel.isTransferPaused || viewModel.screenState != .copying)
 
-                Button("İptal") {
+                Button(AppLanguage.text("İptal", "Cancel")) {
                     viewModel.cancelTransfer()
                 }
                 .disabled(viewModel.screenState != .copying)
@@ -487,18 +535,18 @@ struct ContentView: View {
 
     private var planCard: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Aktarım Planı")
+            Text(AppLanguage.text("Aktarım Planı", "Transfer Plan"))
                 .font(.title2.weight(.semibold))
 
             LazyVGrid(columns: [
                 GridItem(.flexible(minimum: 140), spacing: 12),
                 GridItem(.flexible(minimum: 140), spacing: 12)
             ], alignment: .leading, spacing: 12) {
-                metricCard(title: "Toplam Öğe", value: "\(viewModel.plannedImportSummary.totalItems)")
-                metricCard(title: "Kopyalanacak", value: "\(viewModel.plannedImportSummary.itemsToCopy)")
-                metricCard(title: "Atlanacak Duplicate", value: "\(viewModel.plannedImportSummary.duplicateItems)")
-                metricCard(title: "Seçili Tür", value: viewModel.mediaTransferFilter.title)
-                metricCard(title: "Tarih Aralığı", value: viewModel.importDateFilter.summaryText)
+                metricCard(title: AppLanguage.text("Toplam Öğe", "Total Items"), value: "\(viewModel.plannedImportSummary.totalItems)")
+                metricCard(title: AppLanguage.text("Kopyalanacak", "To Copy"), value: "\(viewModel.plannedImportSummary.itemsToCopy)")
+                metricCard(title: AppLanguage.text("Atlanacak Duplicate", "Skipped Duplicates"), value: "\(viewModel.plannedImportSummary.duplicateItems)")
+                metricCard(title: AppLanguage.text("Seçili Tür", "Selected Type"), value: viewModel.mediaTransferFilter.title)
+                metricCard(title: AppLanguage.text("Tarih Aralığı", "Date Range"), value: viewModel.importDateFilter.summaryText)
             }
         }
         .padding(22)
@@ -518,18 +566,18 @@ struct ContentView: View {
             }
 
             if viewModel.transferSummary.wasCancelled {
-                Text("İşlem tamamlanmadan iptal edildi.")
+                Text(AppLanguage.text("İşlem tamamlanmadan iptal edildi.", "The transfer was cancelled before completion."))
                     .foregroundStyle(.orange)
             }
 
             HStack(spacing: 16) {
                 highlightedSummaryCard(
-                    title: "Toplam Veri",
+                    title: AppLanguage.text("Toplam Veri", "Total Data"),
                     value: FormattingHelpers.formattedByteCount(viewModel.transferSummary.copiedBytes),
                     tint: Color(red: 0.12, green: 0.49, blue: 0.96)
                 )
                 highlightedSummaryCard(
-                    title: "Toplam Süre",
+                    title: AppLanguage.text("Toplam Süre", "Total Time"),
                     value: FormattingHelpers.formattedDuration(viewModel.transferSummary.duration),
                     tint: Color(red: 0.06, green: 0.66, blue: 0.48)
                 )
@@ -539,27 +587,27 @@ struct ContentView: View {
                 GridItem(.flexible(minimum: 140), spacing: 12),
                 GridItem(.flexible(minimum: 140), spacing: 12)
             ], alignment: .leading, spacing: 12) {
-                metricCard(title: "Kopyalanan Veri", value: FormattingHelpers.formattedByteCount(viewModel.transferSummary.copiedBytes))
-                metricCard(title: "Fotoğraf", value: "\(viewModel.transferSummary.copiedPhotos)")
-                metricCard(title: "Video", value: "\(viewModel.transferSummary.copiedVideos)")
-                metricCard(title: "Atlanan", value: "\(viewModel.transferSummary.skippedFiles)")
-                metricCard(title: "Hata", value: "\(viewModel.transferSummary.failedFiles)")
-                metricCard(title: "Süre", value: FormattingHelpers.formattedDuration(viewModel.transferSummary.duration))
+                metricCard(title: AppLanguage.text("Kopyalanan Veri", "Copied Data"), value: FormattingHelpers.formattedByteCount(viewModel.transferSummary.copiedBytes))
+                metricCard(title: AppLanguage.text("Fotoğraf", "Photos"), value: "\(viewModel.transferSummary.copiedPhotos)")
+                metricCard(title: AppLanguage.text("Video", "Videos"), value: "\(viewModel.transferSummary.copiedVideos)")
+                metricCard(title: AppLanguage.text("Atlanan", "Skipped"), value: "\(viewModel.transferSummary.skippedFiles)")
+                metricCard(title: AppLanguage.text("Hata", "Errors"), value: "\(viewModel.transferSummary.failedFiles)")
+                metricCard(title: AppLanguage.text("Süre", "Duration"), value: FormattingHelpers.formattedDuration(viewModel.transferSummary.duration))
             }
 
             HStack(spacing: 12) {
-                Button("Hedef Klasörü Aç") {
+                Button(AppLanguage.text("Hedef Klasörü Aç", "Open Destination Folder")) {
                     viewModel.openTargetFolder()
                 }
                 .buttonStyle(.borderedProminent)
 
-                Button("Hata Logunu Göster") {
+                Button(AppLanguage.text("Hata Logunu Göster", "Show Error Log")) {
                     viewModel.openErrorLog()
                 }
                 .buttonStyle(.bordered)
                 .disabled(viewModel.transferSummary.logFileURL == nil)
 
-                Button("Raporu Aç") {
+                Button(AppLanguage.text("Raporu Aç", "Open Report")) {
                     viewModel.openTransferReport()
                 }
                 .buttonStyle(.bordered)
@@ -573,7 +621,7 @@ struct ContentView: View {
 
     private func errorCard(message: String) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Uyarı")
+            Text(AppLanguage.text("Uyarı", "Notice"))
                 .font(.headline)
             Text(message)
                 .foregroundStyle(.red)
@@ -615,19 +663,23 @@ struct ContentView: View {
                     .font(.headline)
                 Text(item.report.sourceDevice)
                     .foregroundStyle(.secondary)
-                Text("Fotoğraf: \(item.report.copiedPhotos)  Video: \(item.report.copiedVideos)  Veri: \(FormattingHelpers.formattedByteCount(item.report.copiedBytes))")
+                Text(
+                    AppLanguage.isTurkish
+                    ? "Fotoğraf: \(item.report.copiedPhotos)  Video: \(item.report.copiedVideos)  Veri: \(FormattingHelpers.formattedByteCount(item.report.copiedBytes))"
+                    : "Photos: \(item.report.copiedPhotos)  Videos: \(item.report.copiedVideos)  Data: \(FormattingHelpers.formattedByteCount(item.report.copiedBytes))"
+                )
                     .font(.subheadline)
                 if item.report.wasCancelled {
-                    Text("İptal edildi")
+                    Text(AppLanguage.text("İptal edildi", "Cancelled"))
                         .foregroundStyle(.orange)
                 }
             }
             Spacer()
-            Button("Aç") {
+            Button(AppLanguage.text("Aç", "Open")) {
                 viewModel.openHistoryReport(item)
             }
             .buttonStyle(.bordered)
-            Button("Sil") {
+            Button(AppLanguage.text("Sil", "Delete")) {
                 viewModel.deleteHistoryItem(item)
             }
             .buttonStyle(.bordered)
@@ -641,20 +693,20 @@ struct ContentView: View {
 
     private func historyDetailsCard(_ item: TransferHistoryItem) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Seçili Rapor")
+            Text(AppLanguage.text("Seçili Rapor", "Selected Report"))
                 .font(.headline)
 
             HStack(spacing: 16) {
-                metricCard(title: "Tarih", value: FormattingHelpers.formattedDateTime(item.report.createdAt))
-                metricCard(title: "Cihaz", value: item.report.sourceDevice)
-                metricCard(title: "Süre", value: FormattingHelpers.formattedDuration(item.report.duration))
+                metricCard(title: AppLanguage.text("Tarih", "Date"), value: FormattingHelpers.formattedDateTime(item.report.createdAt))
+                metricCard(title: AppLanguage.text("Cihaz", "Device"), value: item.report.sourceDevice)
+                metricCard(title: AppLanguage.text("Süre", "Duration"), value: FormattingHelpers.formattedDuration(item.report.duration))
             }
 
             HStack(spacing: 16) {
-                metricCard(title: "Fotoğraf", value: "\(item.report.copiedPhotos)")
-                metricCard(title: "Video", value: "\(item.report.copiedVideos)")
-                metricCard(title: "Atlanan", value: "\(item.report.skippedFiles)")
-                metricCard(title: "Hata", value: "\(item.report.failedFiles)")
+                metricCard(title: AppLanguage.text("Fotoğraf", "Photos"), value: "\(item.report.copiedPhotos)")
+                metricCard(title: AppLanguage.text("Video", "Videos"), value: "\(item.report.copiedVideos)")
+                metricCard(title: AppLanguage.text("Atlanan", "Skipped"), value: "\(item.report.skippedFiles)")
+                metricCard(title: AppLanguage.text("Hata", "Errors"), value: "\(item.report.failedFiles)")
             }
 
             Text(item.report.targetFolderPath)
@@ -706,13 +758,13 @@ private struct DeviceStatusRow: View {
         Group {
             if isStacked {
                 VStack(spacing: 12) {
-                    infoPill(title: "Cihaz Durumu", value: deviceStateTitle)
-                    infoPill(title: "Hedef Klasör", value: targetFolderPath)
+                    infoPill(title: AppLanguage.text("Cihaz Durumu", "Device Status"), value: deviceStateTitle)
+                    infoPill(title: AppLanguage.text("Hedef Klasör", "Destination Folder"), value: targetFolderPath)
                 }
             } else {
                 HStack(spacing: 16) {
-                    infoPill(title: "Cihaz Durumu", value: deviceStateTitle)
-                    infoPill(title: "Hedef Klasör", value: targetFolderPath)
+                    infoPill(title: AppLanguage.text("Cihaz Durumu", "Device Status"), value: deviceStateTitle)
+                    infoPill(title: AppLanguage.text("Hedef Klasör", "Destination Folder"), value: targetFolderPath)
                 }
             }
         }

@@ -9,11 +9,14 @@ enum MediaScannerError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .noDevice:
-            return "Bagli iPhone bulunamadi."
+            return AppLanguage.text("Bağlı iPhone bulunamadı.", "No connected iPhone was found.")
         case .accessRestricted:
-            return "iPhone medya erisimi hazir degil. Cihaz kilidini acin ve gerekirse Bu Mac'e Guven onayini verin."
+            return AppLanguage.text(
+                "iPhone medya erişimi hazır değil. Cihaz kilidini açın ve gerekirse Bu Mac'e Güven onayını verin.",
+                "iPhone media access is not ready. Unlock the device and confirm Trust This Mac if needed."
+            )
         case let .failedToOpenSession(message):
-            return "Cihaz oturumu acilamadi: \(message)"
+            return AppLanguage.text("Cihaz oturumu açılamadı: \(message)", "Could not open device session: \(message)")
         }
     }
 }

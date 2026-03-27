@@ -29,7 +29,7 @@ struct ImportPlanner {
                 .appending(path: monthFormatter.folderName(for: month), directoryHint: .isDirectory)
 
             let preferredURL = destinationDirectory.appending(path: asset.fileName, directoryHint: .notDirectory)
-            if duplicateDetector.isKnownDuplicate(asset: asset, manifest: manifest) {
+            if duplicateDetector.isKnownDuplicate(asset: asset, manifest: manifest, baseFolder: baseFolder) {
                 duplicateItems += 1
                 if onlyNewFiles {
                     return nil
@@ -44,7 +44,7 @@ struct ImportPlanner {
                 )
             }
 
-            if duplicateDetector.isDuplicate(asset: asset, at: preferredURL) {
+            if duplicateDetector.isDuplicate(asset: asset, in: destinationDirectory) {
                 duplicateItems += 1
                 if onlyNewFiles {
                     return nil

@@ -6,19 +6,22 @@ struct AssetSignature: Codable, Hashable {
     let fileSize: Int64
     let createdAt: Date
     let fingerprint: String?
+    let destinationRelativePath: String?
 
     init(
         sourceIdentifier: String,
         fileName: String,
         fileSize: Int64,
         createdAt: Date,
-        fingerprint: String?
+        fingerprint: String?,
+        destinationRelativePath: String? = nil
     ) {
         self.sourceIdentifier = sourceIdentifier
         self.fileName = fileName
         self.fileSize = fileSize
         self.createdAt = createdAt
         self.fingerprint = fingerprint
+        self.destinationRelativePath = destinationRelativePath
     }
 
     init(asset: MediaAsset) {
@@ -27,6 +30,7 @@ struct AssetSignature: Codable, Hashable {
         self.fileSize = asset.fileSize
         self.createdAt = asset.createdAt
         self.fingerprint = asset.fingerprint
+        self.destinationRelativePath = nil
     }
 
     func looselyMatches(_ other: AssetSignature) -> Bool {

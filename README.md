@@ -1,60 +1,71 @@
 # iPhone Media Importer
 
-macOS icin iPhone baglandiginda fotograf ve videolari tarayip secilen hedef klasore duzenli sekilde aktaran SwiftUI tabanli MVP.
+iPhone Media Importer is a macOS desktop app for transferring photos and videos from an iPhone to a Mac in a clean and organized way.
 
-## Teknoloji Secimi
+It is designed to keep the workflow simple and reliable:
+- Detects a connected iPhone over USB
+- Scans only photo and video files
+- Lets the user choose a destination folder
+- Organizes imports by media type, year, and month
+- Avoids duplicate copies
+- Shows transfer progress, speed, and completion summary
+- Supports Turkish and English UI
 
-- `Swift + SwiftUI`: Apple ekosistemiyle en uyumlu, modern ve uzun vadede surdurulebilir secim.
-- `ImageCaptureCore`: iPhone'u macOS tarafinda resmi olarak medya kaynagi gibi gorup taramak ve indirmek icin uygun framework.
-- `OSLog`: dusuk maliyetli ve sistemle uyumlu loglama.
-- `MVVM + service layer`: UI, is kurallari ve cihaz erisimini ayirmak icin sade ama gelistirilebilir yapi.
+## Technology
 
-`AppKit` yerine `SwiftUI` secildi cunku bu uygulamanin ihtiyaci agir custom pencere yonetimi degil; hizli gelistirme, net veri akisi ve modern macOS arayuzu. Dosya secici gibi noktalarda gereken yerde `AppKit` koprusu kullaniliyor.
+- `Swift + SwiftUI`: modern, native, and maintainable for macOS
+- `ImageCaptureCore`: official Apple framework for accessing iPhone media over USB
+- `OSLog`: lightweight system-friendly logging
+- `MVVM + service layer`: keeps UI, business logic, and device access separated
 
-## Gercekci Cihaz Erisim Stratejisi
+`SwiftUI` was chosen over a pure `AppKit` implementation because this app benefits more from fast iteration, clear state flow, and a modern macOS UI than from low-level window customization.
 
-- USB ile bagli cihazlari `ICDeviceBrowser` ile izleriz.
-- Yalnizca `ICCameraDevice` olarak gorunen, `productKind` degeri `iPhone` veya benzeri olan cihazlari kabul ederiz.
-- Medya listesini `mediaFiles` uzerinden aliriz.
-- Indirme icin `ICCameraFile.requestDownloadWithOptions` kullaniriz.
-- Hedef klasor kullanici tarafindan secilir, secim security-scoped bookmark olarak saklanir.
+## Device Access Strategy
 
-Not: iPhone'a erisim icin kullanicinin cihaz kilidini acmasi ve gerekirse "Trust This Mac" onayini vermesi gerekir. Sandboxed dagitimda kullanici-secili klasor erisimi icin `com.apple.security.files.user-selected.read-write` entitlement'i eklenmelidir.
+- Watches USB-connected devices with `ICDeviceBrowser`
+- Works with `ICCameraDevice` instances recognized as iPhone-like Apple mobile devices
+- Reads media via `mediaFiles`
+- Downloads with `ICCameraFile.requestDownloadWithOptions`
+- Stores the selected destination folder as a security-scoped bookmark
 
-## Tarih ve Klasorleme Kurali
+Important:
+- The iPhone must be unlocked
+- The user may need to confirm `Trust This Mac`
+- Sandboxed distribution requires `com.apple.security.files.user-selected.read-write`
 
-Tarih belirleme onceligi:
+## Date and Folder Rules
+
+Date priority:
 
 1. `exifCreationDate`
 2. `creationDate`
 3. `fileCreationDate`
 4. `modificationDate`
 5. `fileModificationDate`
-6. Import zamani
+6. Import time
 
-Hedef yol ornegi:
+Example output structure:
 
 ```text
-Fotoograflar/2025/03_Mart
+Fotograflar/2025/03_Mart
 Videolar/2025/01_Ocak
 ```
 
-## MVP Ozeti
+## Features
 
-- Cihaz otomatik algilanir
-- Hedef klasor secilir
-- Medya taranir
-- Fotograf/video filtrelenir
-- Tarihe gore klasorlenir
-- Kopyalama ilerlemesi, kalan oge ve tahmini sure gosterilir
-- Duraklat, devam ettir, iptal desteklenir
-- Ozet rapor ve hata logu uretilir
-- Hedef klasorde kalici JSON transfer raporu uretilir
-- Son aktarim raporlari uygulama icinde "Gecmis" bolumunde listelenir
-- Gecmis bolumu arama, filtreleme ve daha fazla goster akisini destekler
-- Demo mod ile gercek cihaz olmadan arayuz akisi test edilebilir
+- Detects an iPhone automatically
+- Scans only photos and videos
+- Lets the user select a destination folder
+- Organizes imports by type, year, and month
+- Prevents duplicate imports
+- Supports media type and date filtering
+- Supports pause, resume, and cancel
+- Shows progress, transfer speed, and estimated remaining time
+- Shows a transfer summary after completion
+- Generates error logs and JSON transfer reports
+- Includes a small support link in the UI footer
 
-## Klasor Yapisi
+## Project Structure
 
 ```text
 Sources/iPhoneMediaImporterApp/
@@ -66,97 +77,98 @@ Sources/iPhoneMediaImporterApp/
   Views/
 ```
 
-## Xcode ile Calistirma
+## Running in Xcode
 
-1. Xcode acin.
-2. Bu klasordeki `iPhoneMediaImporter.xcodeproj` dosyasini acin.
-3. Sol ustte `iPhoneMediaImporter` shared scheme'ini secin.
-4. Run edin. Testler icin Product > Test kullanin.
+1. Open Xcode
+2. Open `iPhoneMediaImporter.xcodeproj`
+3. Select the `iPhoneMediaImporter` shared scheme
+4. Run the app
 
-Not: Projede `Config/Info.plist`, `Config/AppSandbox.entitlements`, `Config/Debug.xcconfig` ve `Config/Release.xcconfig` zaten bagli gelir.
-Not: CLI tarafinda `xcodebuild` kullanmak icin tam Xcode kurulu olmali ve aktif developer directory onun uzerine alinmali.
+For tests, use `Product > Test`.
 
-Ornek:
+Configuration files already included:
+- `Config/Info.plist`
+- `Config/AppSandbox.entitlements`
+- `Config/Debug.xcconfig`
+- `Config/Release.xcconfig`
+
+If you want to use `xcodebuild` from the command line, make sure full Xcode is selected:
 
 ```text
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 ```
 
-## Release, Signing ve Notarization
+## Demo Mode
 
-Disaridan dagitim icin repo icinde hazir bir release script'i bulunur:
-
-```text
-./Scripts/release_build.sh
-```
-
-Oncesinde:
-
-1. `Config/SigningOverrides.xcconfig.example` dosyasini `Config/SigningOverrides.xcconfig` olarak kopyalayin.
-2. Kendi `DEVELOPMENT_TEAM`, `PRODUCT_BUNDLE_IDENTIFIER` ve imzalama kimligi degerlerinizi girin.
-3. Bir notarytool profili olusturun:
-
-```text
-xcrun notarytool store-credentials "iPhoneMediaImporterNotary"
-```
-
-4. Script'i su degiskenlerle calistirin:
-
-```text
-NOTARY_PROFILE=iPhoneMediaImporterNotary \
-DEVELOPMENT_TEAM=TEAMID1234 \
-PRODUCT_BUNDLE_IDENTIFIER=com.sirketiniz.iPhoneMediaImporter \
-./Scripts/release_build.sh
-```
-
-Script su adimlari otomatik yapar:
-
-- `Release` archive alir
-- `developer-id` export uretir
-- `.app` paketini zip'ler
-- `notarytool submit --wait` ile notarization gonderir
-- `stapler` ile notary ticket'i uygular
-- `spctl` ile son dogrulamayi yapar
-
-Daha ayrintili dagitim notlari icin [ReleaseGuide.md](/Users/yuliyanognyanov/Documents/iphoneBackup/Docs/ReleaseGuide.md) dosyasina bakin.
-
-## Demo Mod
-
-Gercek cihaz bagli degilken ekran akislarini test etmek icin run environment variable ekleyin:
+To test the UI flow without a real iPhone, run with:
 
 ```text
 IPHONE_IMPORTER_DEMO=1
 ```
 
-Bu modda ornek medya listesi uretilir ve indirme yerine sahte bir zamanlanmis aktarim calisir.
-Xcode icinde bunun icin hazir `iPhoneMediaImporter Demo` shared scheme'i de eklendi.
+This mode generates sample media items and simulates transfer progress.
 
-## Testler
+There is also a ready-to-use shared scheme:
+- `iPhoneMediaImporter Demo`
 
-Paket icinde cekirdek is kurallari icin unit testler de bulunur:
+## Tests
+
+The project includes unit tests for core business rules.
 
 ```text
 swift test
 ```
 
-Bu ortamda `swift test` komutu yerel toolchain/SDK uyumsuzlugu nedeniyle dogrulanamadi; ancak testler cihaz gerektirmeyen saf servisler icin yazildi.
+If `swift test` fails on your machine, it is usually caused by local toolchain or SDK configuration rather than the app logic itself.
 
-## Son Eklenenler
+## Release and Distribution
 
-- Ayarlar bolumu ile rapor/log kaydi ve aktarim sonrasi klasor acma davranisi yonetilir.
-- Gecmis raporlari tek tek silinebilir veya topluca temizlenebilir.
-- Gecmis karti arama, filtreleme ve daha fazla goster akisini destekler.
-- Gecmis raporlari CSV olarak disa aktarilabilir.
-- Secili rapor icin uygulama icinde detay ozeti gosterilir.
-- Hedef klasor secimi sifirlanabilir.
-- Xcode proje ayarlari test import ve Debug derleme icin biraz daha sertlestirildi.
-- Cihaz delegate akisi guclendirildi; kilitli veya guven verilmeyen iPhone durumlari daha net yakalaniyor.
-- Release build, Developer ID export ve notarization icin hazir script ve config iskeleti eklendi.
+There is a helper script for release builds:
 
-## Resmi Kaynaklar
+```text
+./Scripts/release_build.sh
+```
 
-- Apple ImageCaptureCore genel cerceve: <https://developer.apple.com/documentation/imagecapturecore>
-- `ICDeviceBrowser`: <https://developer.apple.com/documentation/imagecapturecore/icdevicebrowser>
-- `ICCameraDevice`: <https://developer.apple.com/documentation/imagecapturecore/iccameradevice>
-- `ICCameraFile`: <https://developer.apple.com/documentation/imagecapturecore/iccamerafile>
-- Security-scoped bookmarklar: <https://developer.apple.com/documentation/foundation/nsurl/bookmarkdata(options:includingresourcevaluesforkeys:relativeto:)>
+Before using it:
+
+1. Copy `Config/SigningOverrides.xcconfig.example` to `Config/SigningOverrides.xcconfig`
+2. Set your own `DEVELOPMENT_TEAM`, `PRODUCT_BUNDLE_IDENTIFIER`, and signing identity
+3. Create a notary profile:
+
+```text
+xcrun notarytool store-credentials "iPhoneMediaImporterNotary"
+```
+
+4. Run the script with your values:
+
+```text
+NOTARY_PROFILE=iPhoneMediaImporterNotary \
+DEVELOPMENT_TEAM=TEAMID1234 \
+PRODUCT_BUNDLE_IDENTIFIER=com.yourcompany.iPhoneMediaImporter \
+./Scripts/release_build.sh
+```
+
+The script automates:
+- release archive
+- Developer ID export
+- app zip creation
+- notarization submission
+- stapling
+- final verification
+
+For more detail, see [ReleaseGuide.md](/Users/yuliyanognyanov/Documents/iphoneBackup/Docs/ReleaseGuide.md).
+
+## Notes
+
+This project is currently shared as an unsigned macOS build unless it is manually signed and notarized.
+
+macOS may show a security warning on first launch.
+If needed, open the app using `Right Click > Open`.
+
+## Official References
+
+- [ImageCaptureCore](https://developer.apple.com/documentation/imagecapturecore)
+- [ICDeviceBrowser](https://developer.apple.com/documentation/imagecapturecore/icdevicebrowser)
+- [ICCameraDevice](https://developer.apple.com/documentation/imagecapturecore/iccameradevice)
+- [ICCameraFile](https://developer.apple.com/documentation/imagecapturecore/iccamerafile)
+- [Security-scoped bookmarks](https://developer.apple.com/documentation/foundation/nsurl/bookmarkdata(options:includingresourcevaluesforkeys:relativeto:))

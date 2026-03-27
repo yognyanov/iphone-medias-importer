@@ -22,11 +22,11 @@ enum MediaTransferFilter: String, Codable, CaseIterable {
     var title: String {
         switch self {
         case .all:
-            return "Tümü"
+            return AppLanguage.text("Tümü", "All")
         case .photosOnly:
-            return "Sadece Fotoğraf"
+            return AppLanguage.text("Sadece Fotoğraf", "Photos Only")
         case .videosOnly:
-            return "Sadece Video"
+            return AppLanguage.text("Sadece Video", "Videos Only")
         }
     }
 
@@ -50,11 +50,11 @@ enum ImportDateFilterMode: String, Codable, CaseIterable {
     var title: String {
         switch self {
         case .all:
-            return "Tümü"
+            return AppLanguage.text("Tümü", "All")
         case .specificMonth:
-            return "Belirli Ay"
+            return AppLanguage.text("Belirli Ay", "Specific Month")
         case .specificYear:
-            return "Belirli Yıl"
+            return AppLanguage.text("Belirli Yıl", "Specific Year")
         }
     }
 }
@@ -86,7 +86,7 @@ struct ImportDateFilter: Codable, Equatable {
     var summaryText: String {
         switch mode {
         case .all:
-            return "Tümü"
+            return AppLanguage.text("Tümü", "All")
         case .specificMonth:
             return "\(monthTitle) \(year)"
         case .specificYear:
@@ -95,9 +95,12 @@ struct ImportDateFilter: Codable, Equatable {
     }
 
     var monthTitle: String {
-        let titles = [
+        let titles = AppLanguage.isTurkish ? [
             "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
             "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+        ] : [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
         ]
         guard month >= 1 && month <= titles.count else { return "-" }
         return titles[month - 1]

@@ -3,10 +3,19 @@ import Foundation
 struct DuplicateDetector {
     private let metadataKeys: Set<URLResourceKey> = [.fileSizeKey, .creationDateKey, .contentModificationDateKey]
 
-    func isKnownDuplicate(asset: MediaAsset, manifest: ImportManifest) -> Bool {
+    func isKnownDuplicate(asset: MediaAsset, manifest: ImportManifest, baseFolder: URL) -> Bool {
         let signature = AssetSignature(asset: asset)
         return manifest.importedAssets.contains { existing in
-            existing.looselyMatches(signature)
+            guard existing.looselyMatches(signature) else {
+                return false
+            }
+
+            guard let destinationRelativePath = existing.destinationRelativePath else {
+                return false
+            }
+
+            let destinationURL = baseFolder.appending(path: destinationRelativePath, directoryHint: .notDirectory)
+            return FileManager.default.fileExists(atPath: destinationURL.path)
         }
     }
 
@@ -26,6 +35,18 @@ struct DuplicateDetector {
         let sameSize = Int64(fileSize) == asset.fileSize
         let sameDate = compareDate(asset.createdAt, values.creationDate ?? values.contentModificationDate)
         return sameName && sameSize && sameDate
+    }
+
+    func isDuplicate(asset: MediaAsset, in directoryURL: URL) -> Bool {
+        guard let fileURLs = try? FileManager.default.contentsOfDirectory(
+            at: directoryURL,
+            includingPropertiesForKeys: Array(metadataKeys),
+            options: [.skipsHiddenFiles]
+        ) else {
+            return false
+        }
+
+        return fileURLs.contains { isDuplicate(asset: asset, at: $0) }
     }
 
     func resolvedUniqueURL(for preferredURL: URL) -> URL {

@@ -113,7 +113,9 @@ final class DeviceBrowserService: NSObject, ObservableObject {
     }
 
     private func accessRestrictedMessage(for deviceName: String) -> String {
-        "\(deviceName) bağlı ancak erişim kısıtlı. iPhone kilidini açın ve gerekirse Bu Mac'e Güven onayını verin."
+        AppLanguage.isTurkish
+            ? "\(deviceName) bağlı ancak erişim kısıtlı. iPhone kilidini açın ve gerekirse Bu Mac'e Güven onayını verin."
+            : "\(deviceName) is connected but access is restricted. Unlock the iPhone and confirm Trust This Mac if needed."
     }
 
     private func updateDiagnostics(reason: String) {

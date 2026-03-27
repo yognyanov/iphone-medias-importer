@@ -8,8 +8,11 @@ struct FolderSelectionService {
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
         panel.allowsMultipleSelection = false
-        panel.prompt = "Sec"
-        panel.message = "Medya dosyalarinin kopyalanacagi klasoru secin."
+        panel.prompt = AppLanguage.text("Seç", "Select")
+        panel.message = AppLanguage.text(
+            "Medya dosyalarının kopyalanacağı klasörü seçin.",
+            "Select the folder where media files will be copied."
+        )
         return panel.runModal() == .OK ? panel.url : nil
     }
 }

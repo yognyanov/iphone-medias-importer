@@ -21,7 +21,7 @@ final class AppViewModel: ObservableObject {
     @Published var settings: AppSettings
     @Published var lastErrorMessage: String?
     @Published var assets: [MediaAsset] = []
-    @Published var deviceStateTitle = "Cihaz bekleniyor"
+    @Published var deviceStateTitle = AppLanguage.text("Cihaz bekleniyor", "Waiting for device")
     @Published var canScan = false
     @Published var isTransferPaused = false
     @Published var mediaTransferFilter: MediaTransferFilter = .all
@@ -45,6 +45,7 @@ final class AppViewModel: ObservableObject {
         let settingsStore = AppSettingsStore()
         let bookmarkStore = BookmarkStore()
         self.settings = settingsStore.load()
+        AppLanguage.configure(self.settings.languagePreference)
         self.targetFolderURL = bookmarkStore.restoreURL()
         bindDeviceState()
         refreshTransferHistory()
@@ -87,20 +88,22 @@ final class AppViewModel: ObservableObject {
 
     var currentTransferStatusText: String {
         if screenState == .completed {
-            return transferSummary.wasCancelled ? "İşlem iptal edildi" : "Kopyalama tamamlandı"
+            return transferSummary.wasCancelled
+                ? AppLanguage.text("İşlem iptal edildi", "Transfer cancelled")
+                : AppLanguage.text("Kopyalama tamamlandı", "Transfer completed")
         }
 
         let fileName = transferProgress.currentFileName.lowercased()
 
         if [".jpg", ".jpeg", ".png", ".heic"].contains(where: { fileName.hasSuffix($0) }) {
-            return "Şu anda resimler kopyalanıyor"
+            return AppLanguage.text("Şu anda resimler kopyalanıyor", "Copying photos")
         }
 
         if [".mp4", ".mov", ".avi", ".m4v"].contains(where: { fileName.hasSuffix($0) }) {
-            return "Şu anda videolar kopyalanıyor"
+            return AppLanguage.text("Şu anda videolar kopyalanıyor", "Copying videos")
         }
 
-        return "Kopyalama hazırlanıyor"
+        return AppLanguage.text("Kopyalama hazırlanıyor", "Preparing transfer")
     }
 
     var transferSpeedText: String {
@@ -112,23 +115,36 @@ final class AppViewModel: ObservableObject {
     }
 
     var completionHeadlineText: String {
-        transferSummary.wasCancelled ? "Aktarım durduruldu" : "Aktarım tamamlandı"
+        transferSummary.wasCancelled
+            ? AppLanguage.text("Aktarım durduruldu", "Transfer stopped")
+            : AppLanguage.text("Aktarım tamamlandı", "Transfer completed")
     }
 
     var completionDetailText: String {
         if transferSummary.wasCancelled {
-            return "İşlem kullanıcı tarafından durduruldu. Aktarılan dosyalar hedef klasörde hazır."
+            return AppLanguage.text(
+                "İşlem kullanıcı tarafından durduruldu. Aktarılan dosyalar hedef klasörde hazır.",
+                "The transfer was stopped by the user. Copied files are available in the destination folder."
+            )
         }
 
-        return "\(transferSummary.copiedPhotos) fotoğraf ve \(transferSummary.copiedVideos) video başarıyla aktarıldı."
+        return AppLanguage.isTurkish
+            ? "\(transferSummary.copiedPhotos) fotoğraf ve \(transferSummary.copiedVideos) video başarıyla aktarıldı."
+            : "\(transferSummary.copiedPhotos) photos and \(transferSummary.copiedVideos) videos were transferred successfully."
     }
 
     var deviceHelpMessage: String? {
         switch deviceBrowserService.connectionState {
         case .disconnected, .searching:
-            return "iPhone görünmüyorsa telefonun kilidini açın ve Bu Mac'e Güven onayını verin."
+            return AppLanguage.text(
+                "iPhone görünmüyorsa telefonun kilidini açın ve Bu Mac'e Güven onayını verin.",
+                "If the iPhone does not appear, unlock the phone and confirm Trust This Mac."
+            )
         case .accessRestricted:
-            return "Telefonun kilidini açık tutun ve gerekirse Bu Mac'e Güven onayını yeniden verin."
+            return AppLanguage.text(
+                "Telefonun kilidini açık tutun ve gerekirse Bu Mac'e Güven onayını yeniden verin.",
+                "Keep the phone unlocked and confirm Trust This Mac again if needed."
+            )
         case .connected:
             return nil
         }
@@ -222,7 +238,7 @@ final class AppViewModel: ObservableObject {
 
     func startCopy() {
         guard let targetFolderURL else {
-            lastErrorMessage = "Lutfen hedef klasor secin."
+            lastErrorMessage = AppLanguage.text("Lütfen hedef klasör seçin.", "Please select a destination folder.")
             return
         }
 
@@ -235,7 +251,7 @@ final class AppViewModel: ObservableObject {
         )
         guard plan.summary.itemsToCopy > 0 else {
             plannedImportSummary = plan.summary
-            lastErrorMessage = "Aktarılacak yeni medya dosyası bulunamadı."
+            lastErrorMessage = AppLanguage.text("Aktarılacak yeni medya dosyası bulunamadı.", "No new media files were found to transfer.")
             return
         }
         plannedImportSummary = plan.summary
@@ -354,7 +370,10 @@ final class AppViewModel: ObservableObject {
             }
             refreshTransferHistory()
         } catch {
-            lastErrorMessage = "Rapor silinemedi: \(error.localizedDescription)"
+            lastErrorMessage = AppLanguage.text(
+                "Rapor silinemedi: \(error.localizedDescription)",
+                "Could not delete report: \(error.localizedDescription)"
+            )
         }
     }
 
@@ -366,7 +385,10 @@ final class AppViewModel: ObservableObject {
             refreshTransferHistory()
             selectedHistoryItem = nil
         } catch {
-            lastErrorMessage = "Gecmis temizlenemedi: \(error.localizedDescription)"
+            lastErrorMessage = AppLanguage.text(
+                "Geçmiş temizlenemedi: \(error.localizedDescription)",
+                "Could not clear history: \(error.localizedDescription)"
+            )
         }
     }
 
@@ -376,7 +398,10 @@ final class AppViewModel: ObservableObject {
 
     func exportHistoryCSV() {
         guard let targetFolderURL else {
-            lastErrorMessage = "CSV disa aktarmak icin once hedef klasor secin."
+            lastErrorMessage = AppLanguage.text(
+                "CSV dışa aktarmak için önce hedef klasör seçin.",
+                "Please choose a destination folder before exporting CSV."
+            )
             return
         }
 
@@ -385,20 +410,28 @@ final class AppViewModel: ObservableObject {
                 try historyExportService.exportCSV(items: filteredTransferHistory, to: targetFolderURL)
             }
             guard let exportURL else {
-                lastErrorMessage = "CSV disa aktarimi icin klasor erisimi saglanamadi."
+                lastErrorMessage = AppLanguage.text(
+                    "CSV dışa aktarımı için klasör erişimi sağlanamadı.",
+                    "Folder access was not available for CSV export."
+                )
                 return
             }
             NSWorkspace.shared.open(exportURL)
         } catch {
-            lastErrorMessage = "CSV disa aktarimi basarisiz: \(error.localizedDescription)"
+            lastErrorMessage = AppLanguage.text(
+                "CSV dışa aktarımı başarısız: \(error.localizedDescription)",
+                "CSV export failed: \(error.localizedDescription)"
+            )
         }
     }
 
     func updateSettings(_ mutate: (inout AppSettings) -> Void) {
         var updated = settings
         mutate(&updated)
-        settings = updated
         settingsStore.save(updated)
+        AppLanguage.configure(updated.languagePreference)
+        settings = updated
+        deviceStateTitle = deviceBrowserService.connectionState.title
         historyVisibleCount = updated.keepHistoryVisibleCount
     }
 
@@ -474,7 +507,10 @@ final class AppViewModel: ObservableObject {
                 guard let self else { return }
                 if self.screenState == .copying, !state.isConnected {
                     self.transferCoordinator.cancel()
-                    self.lastErrorMessage = "iPhone baglantisi kesildi. Kopyalama guvenli sekilde durduruldu."
+                    self.lastErrorMessage = AppLanguage.text(
+                        "iPhone bağlantısı kesildi. Kopyalama güvenli şekilde durduruldu.",
+                        "The iPhone connection was lost. The transfer was stopped safely."
+                    )
                     self.screenState = .error
                 }
             }
@@ -518,8 +554,10 @@ private final class NotificationService {
             guard isAuthorized else { return }
 
             let content = UNMutableNotificationContent()
-            content.title = "Aktarım tamamlandı"
-            content.body = "\(summary.copiedPhotos) fotoğraf ve \(summary.copiedVideos) video aktarıldı. Toplam veri: \(FormattingHelpers.formattedByteCount(summary.copiedBytes))."
+            content.title = AppLanguage.text("Aktarım tamamlandı", "Transfer completed")
+            content.body = AppLanguage.isTurkish
+                ? "\(summary.copiedPhotos) fotoğraf ve \(summary.copiedVideos) video aktarıldı. Toplam veri: \(FormattingHelpers.formattedByteCount(summary.copiedBytes))."
+                : "\(summary.copiedPhotos) photos and \(summary.copiedVideos) videos were transferred. Total data: \(FormattingHelpers.formattedByteCount(summary.copiedBytes))."
             content.sound = .default
 
             let request = UNNotificationRequest(
