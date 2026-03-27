@@ -1,4 +1,5 @@
 # iPhone Media Importer
+iPhone Media Importer is a lightweight macOS app that helps you transfer iPhone photos and videos to your Mac in a clean, organized, and reliable way.
 
 iPhone Media Importer is a macOS desktop app for transferring photos and videos from an iPhone to a Mac in a clean and organized way.
 
